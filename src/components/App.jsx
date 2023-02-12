@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
 import { ImageGallery } from '../components/ImageGallery/ImageGallery';
 import { Modal } from '../components/Modal/Modal';
 import { Searchbar } from '../components/Searchbar/Searchbar';
@@ -8,87 +8,76 @@ import { Notify } from 'notiflix';
 import { Button } from '../components/Button/Button';
 import { Loader } from '../components/Loader/Loader';
 
-export class App extends Component {
-  state = {
-    images: [],
-    search: '',
-    page: 1,
-    isLoading: false,
-    openModal: false,
-    loadmoreBtn: false,
+export const App = () => {
+  const [images, setImages] = useState([]);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [largeImageURL, setLargeImageURL] = useState('');
+  const [loadmoreBtn, setLoadmoreBtn] = useState(false);
+
+  const onClickLoadMore = () => {
+    setPage(prev => prev + 1);
+    setIsLoading(true);
+    setLoadmoreBtn(true);
   };
 
-  onClickLoadMore = () => {
-    this.setState({
-      page: this.state.page + 1,
-      isLoading: true,
-    });
-    this.fetchGallery(this.state.search, this.state.page + 1);
+  const onModalOpen = url => {
+    setOpenModal(true);
+    setLargeImageURL(url);
   };
 
-  openModal = url => {
-    this.setState({ openModal: true, largeImageURL: url });
+  const onModalClose = () => {
+    setOpenModal(false);
+    setLargeImageURL('');
   };
 
-  onModalClose = () => {
-    this.setState({ openModal: false, largeImageURL: '' });
-  };
-
-  onSubmit = evt => {
+  const onSubmit = evt => {
     evt.preventDefault();
-    this.setState({
-      search: evt.target.search.value.trim().toLowerCase(),
-      isLoading: true,
-      images: [],
-      page: 1,
-    });
-    this.fetchGallery(evt.target.search.value);
+    setSearch(evt.target.search.value.trim().toLowerCase());
+    setIsLoading(true);
+    setImages([]);
+    setPage(1);
     evt.target.reset();
   };
 
-  async fetchGallery(search, page) {
-    try {
-      const response = await fetchImages(search, page);
-      this.setState(prevState => {
-        return {
-          images: [...prevState.images, ...response],
-        };
-      });
-      if (response.length < 1) {
-        Notify.failure('Not found');
+  useEffect(() => {
+    if (!search) return;
+    const fetchGallery = async search => {
+      try {
+        const response = await fetchImages(search, page);
+        setImages(prev => [...prev, ...response]);
+        if (response.length < 1) {
+          Notify.failure('Not found');
+        }
+        if (response.length < 12) {
+          setIsLoading(false);
+        }
+        if (response.length === 12) {
+          setIsLoading(true);
+          setLoadmoreBtn(true);
+        }
+      } finally {
+        setIsLoading(false);
       }
-      if (response.length < 12) {
-        this.setState({ loadmoreBtn: false });
-      }
-      if (response.length === 12) {
-        this.setState({ loadmoreBtn: true });
-      }
-    } finally {
-      this.setState({ isLoading: false });
-    }
-  }
+    };
+    fetchGallery(search, page);
+  }, [search, page]);
 
-  render() {
-    const { images, largeImageURL, isLoading, loadmoreBtn, openModal } =
-      this.state;
-
-    return (
-      <AppDiv>
-        <Searchbar onSubmit={this.onSubmit} />
-        <ImageGallery
-          images={images}
-          openModal={this.openModal}
-          onLoadMore={this.onLoadMore}
-        />{' '}
-        {isLoading && <Loader />}
-        {loadmoreBtn && <Button onClickLoadMore={this.onClickLoadMore} />}
-        {openModal && (
-          <Modal
-            largeImageURL={largeImageURL}
-            onModalClose={this.onModalClose}
-          />
-        )}
-      </AppDiv>
-    );
-  }
-}
+  return (
+    <AppDiv>
+      <Searchbar onSubmit={onSubmit} />
+      <ImageGallery
+        images={images}
+        openModal={onModalOpen}
+        onLoadMore={onClickLoadMore}
+      />{' '}
+      {isLoading && <Loader />}
+      {loadmoreBtn && <Button onClickLoadMore={onClickLoadMore} />}
+      {openModal && (
+        <Modal largeImageURL={largeImageURL} onModalClose={onModalClose} />
+      )}
+    </AppDiv>
+  );
+};
