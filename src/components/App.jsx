@@ -53,6 +53,7 @@ export const App = () => {
         }
         if (response.length < 12) {
           setIsLoading(false);
+          setLoadmoreBtn(false);
         }
         if (response.length === 12) {
           setIsLoading(true);
