@@ -37,14 +37,14 @@ The component takes one prop onSubmit - a function to pass the value of the iput
   < /form >
 < /header >
 
-Description of the <ImageGallery> component. 
+#### Description of the <ImageGallery> component. 
 A list of image cards. Creates a DOM element of the following structure.
 
 < ul class="gallery" >
   < ! -- Set < li > with images -- >
 < /ul >
 
-Description of the component < ImageGalleryItem >. 
+#### Description of the component < ImageGalleryItem >. 
 
 A list item component with an image. Creates a DOM element of the following structure.
 
@@ -52,7 +52,7 @@ A list item component with an image. Creates a DOM element of the following stru
   < img src="" alt="" / >
 < /li >
 
-Description of the < Button > component. 
+#### Description of the < Button > component. 
 
 Pressing the Load more button should load the next batch of Images and rendered with the previous ones. The button should be rendered only when there are some loaded images. If the image array is empty, the button is not rendered.
 
@@ -60,7 +60,7 @@ Description of the < Loader > component.
 
 Spinner component, displays while images are being loaded. Use any ready made component, e.g. react-loader-spinner.
 
-Description of the component < Modal >. 
+#### Description of the component < Modal >. 
 
 When you click on a gallery item a modal window with a dark overlay and display a larger version of the image. The modal window should be closed.
 
