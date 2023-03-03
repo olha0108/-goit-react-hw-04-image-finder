@@ -2,7 +2,7 @@
 
 Write a keyword image search application. 
 
-Create components <Searchbar>, <ImageGallery>, <ImageGalleryItem>, <Loader>, <Button> и <Modal>. Ready styles of components can be taken in file styles.css and tweak them if needed.
+Create components < Searchbar >, < ImageGallery >, < ImageGalleryItem >, < Loader >, < Button > и < Modal >. Ready styles of components can be taken in file styles.css and tweak them if needed.
 
 ## Pixabay API instructions
 
