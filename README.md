@@ -14,10 +14,10 @@ Don't Remember that when you search for a new keyword, you have to reset the val
 
 The response from the api comes an array of objects in which you are only interested in the following properties.
 
-id - a unique identifier
-webformatURL - link to the small image for the list of cards
-largeImageURL - link to the large image for the modal window
-Description of the component < Searchbar >. 
+id - a unique identifier.     
+webformatURL - link to the small image for the list of cards.  
+largeImageURL - link to the large image for the modal window.  
+Description of the component < Searchbar >.    
 
 The component takes one prop onSubmit - a function to pass the value of the iput When the form is submitted. Creates a DOM element of the following structure.
 
