@@ -9,7 +9,8 @@ Create components < Searchbar >, < ImageGallery >, < ImageGalleryItem >, < Loade
 For HTTP requests, use a public image search service Pixabay. Register and get a private access key.
 
 The URL string of the HTTP request.
-Pixabay API supports pagination, by default the page parameter is set to 1. Let the response comes with 12 objects each, set to per_page. Don't Remember that when you search for a new keyword, you have to reset the value of page to 1.
+Pixabay API supports pagination, by default the page parameter is set to 1. Let the response comes with 12 objects each, set to per_page.   
+Don't Remember that when you search for a new keyword, you have to reset the value of page to 1.
 
 The response from the api comes an array of objects in which you are only interested in the following properties.
 
@@ -40,8 +41,7 @@ Description of the <ImageGallery> component.
 A list of image cards. Creates a DOM element of the following structure.
 
 < ul class="gallery" >
-  < ! -- Set <li >
-  with images -- >
+  < ! -- Set < li > with images -- >
 < /ul >
 
 Description of the component < ImageGalleryItem >. 
@@ -60,7 +60,7 @@ Description of the < Loader > component.
 
 Spinner component, displays while images are being loaded. Use any ready made component, e.g. react-loader-spinner.
 
-Description of the component < Modal >.​
+Description of the component < Modal >. 
 
 When you click on a gallery item a modal window with a dark overlay and display a larger version of the image. The modal window should be closed.
 
